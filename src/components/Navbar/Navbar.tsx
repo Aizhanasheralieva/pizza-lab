@@ -8,19 +8,19 @@ const Navbar = () => {
                 <div className="container">
                     <NavLink to="/" className="text-decoration-none">
             <span className="navbar-brand mb-0 text-white fs-1">
-              Calorie Tracker
+              Pizza Turtle Admin
             </span>
                     </NavLink>
                     <div className="ms-auto">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/">
-                                    Home
+                                <NavLink className="nav-link" to="/admin">
+                                   Admin
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/add">
-                                    Meal Form
+                                <NavLink className="nav-link" to="/addNewDish">
+                                    <button className="btn btn-outline-light text-black text-bold fs-4" type="submit">Add new Dish</button>
                                 </NavLink>
                             </li>
                         </ul>

@@ -1,8 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit";
+import {variousPizzaDishesReducer} from "../store/slices/variousPizzaDishesSlice.ts";
 
 export const store = configureStore({
     reducer: {
-
+        variousPizzaDishes: variousPizzaDishesReducer,
     },
 });
 
