@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {selectAddPizzaDishLoading} from "../../store/slices/variousPizzaDishesSlice.ts";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {addNewPizzaDish} from "../../store/thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
+import {addNewPizzaDish, fetchAllPizzaDishes} from "../../store/thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
 import ButtonSpinner from "../UI/ButtonSpinner/ButtonSpinner.tsx";
+import {useNavigate} from "react-router-dom";
 
 const initialStateForForm = {
     title: '',
@@ -12,9 +13,9 @@ const initialStateForForm = {
 
 const AddNewDish = () => {
     const loadingForAddingDish = useAppSelector(selectAddPizzaDishLoading);
-    // const loadingForFetchingDish = useAppSelector(selectFetchPizzaDishLoading);
     const dispatch = useAppDispatch();
     const [pizzaDish, setPizzaDish] = useState<IPizzaDishesForm>(initialStateForForm);
+    const navigate = useNavigate();
 
     const onChangePizzaDishInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -28,10 +29,23 @@ const AddNewDish = () => {
 
     // console.log(pizzaDish);
 
+  const fetchPizzaDishes = useCallback(async () => {
+        await dispatch(fetchAllPizzaDishes());
+    }, [dispatch]);
+
     const onSubmitTheForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(addNewPizzaDish({...pizzaDish}));
+        await dispatch(addNewPizzaDish({...pizzaDish}));
+        navigate("/dishes");
+       await fetchPizzaDishes();
+       setPizzaDish(initialStateForForm);
     };
+
+
+
+    useEffect(() => {
+        void fetchPizzaDishes();
+    }, [fetchPizzaDishes]);
 
     return (
         <div className="container">
@@ -62,19 +76,31 @@ const AddNewDish = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="image" className="form-label">Image URL of the dish</label>
+                    <label htmlFor="image_URL" className="form-label">Image URL</label>
                     <input
-                    type="url"
-                    className="form-control"
-                    id="image"
-                    name="image_URL"
-                    value={pizzaDish.image_URL}
+                        type="text"
+                        className="form-control"
+                        id="image_URL"
+                        name="image_URL"
+                        value={pizzaDish.image_URL}
                     onChange={onChangePizzaDishInput}
-                    placeholder="Enter dish image URL"
-                    />
+                    placeholder="Enter dish image URL"/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="image" className="form-label">Image of the dish</label>
+                    {pizzaDish.image_URL && (
+                        <img
+                            src={pizzaDish.image_URL}
+                            className="rounded"
+                            alt="Image URL"
+                            style={{maxWidth: "100px"}}
+                        />
+                    )}
                 </div>
                 <div>
-                    <button disabled={loadingForAddingDish} type="submit" className="btn btn-primary me-2">Add new Dish</button>
+                    <button disabled={loadingForAddingDish} type="submit" className="btn btn-primary me-2">Add new
+                        Dish
+                    </button>
                     {loadingForAddingDish ? <ButtonSpinner/> : null}
                 </div>
             </form>

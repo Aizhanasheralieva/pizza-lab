@@ -1,5 +1,9 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {addNewPizzaDish} from "../thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {
+    addNewPizzaDish,
+    deletePizzaDishById,
+    fetchAllPizzaDishes
+} from "../thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
 import {RootState} from "../../app/store.ts";
 
 interface variousPizzaDishesState {
@@ -7,6 +11,7 @@ interface variousPizzaDishesState {
     loadings: {
         fetchingDishes: boolean;
         addingDish: boolean;
+        deleteDish: boolean;
     }
 }
 const initialState: variousPizzaDishesState = {
@@ -14,11 +19,14 @@ const initialState: variousPizzaDishesState = {
     loadings: {
        fetchingDishes: false,
         addingDish: false,
+        deleteDish: false,
     }
 };
 
 export const selectAddPizzaDishLoading = (state: RootState) => state.variousPizzaDishes.loadings.addingDish;
 export const selectFetchPizzaDishLoading = (state: RootState) => state.variousPizzaDishes.loadings.fetchingDishes;
+export const selectDeletePizzaDishLoading = (state: RootState) => state.variousPizzaDishes.loadings.deleteDish;
+export const selectAllPizzaDishes = (state: RootState) => state.variousPizzaDishes.dishes;
 
 export const variousPizzaDishesSlice = createSlice({
    name: 'variousPizzaDishes',
@@ -34,6 +42,25 @@ export const variousPizzaDishesSlice = createSlice({
            })
            .addCase(addNewPizzaDish.rejected, (state) => {
                state.loadings.addingDish = false;
+           })
+           .addCase(fetchAllPizzaDishes.pending, (state) => {
+               state.loadings.fetchingDishes = true;
+           })
+           .addCase(fetchAllPizzaDishes.fulfilled, (state, action: PayloadAction<IPizzaDishes[]>) => {
+               state.loadings.fetchingDishes = false;
+               state.dishes = action.payload.reverse();
+           })
+           .addCase(fetchAllPizzaDishes.rejected, (state) => {
+               state.loadings.fetchingDishes = false;
+           })
+           .addCase(deletePizzaDishById.pending, (state) => {
+               state.loadings.deleteDish = true;
+           })
+           .addCase(deletePizzaDishById.fulfilled, (state) => {
+               state.loadings.deleteDish = false;
+           })
+           .addCase(deletePizzaDishById.rejected, (state) => {
+               state.loadings.deleteDish = false;
            });
     }
 });
