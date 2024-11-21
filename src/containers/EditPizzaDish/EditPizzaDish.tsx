@@ -1,4 +1,4 @@
-import AddNewDish from "../../components/AddNewDish/AddNewDish.tsx";
+import AddNewDishForm from "../../components/AddNewDishForm/AddNewDishForm.tsx";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
 import {useCallback, useEffect} from "react";
 import {fetchOnePizzaDishById, updatePizza} from "../../store/thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
@@ -34,10 +34,10 @@ const EditPizzaDish = () => {
     };
 
 
-    return (
+    return pizzaOne && (
         <div>
             {pizzaOne ? (
-                <AddNewDish editAndAddNewPizzaDish={editAndAddNewPizzaDish} isEdit pizzaDishItem={pizzaOne}  />
+                <AddNewDishForm editAndAddNewPizzaDish={editAndAddNewPizzaDish} isEdit pizzaDishItem={pizzaOne}  />
             ) : null}
         </div>
     );

@@ -14,7 +14,7 @@ const initialStateForForm = {
     image_URL: '',
 };
 
-const AddNewDish: React.FC<Props> = ({editAndAddNewPizzaDish, pizzaDishItem = initialStateForForm, isEdit = false}) => {
+const AddNewDishForm: React.FC<Props> = ({editAndAddNewPizzaDish, pizzaDishItem = initialStateForForm, isEdit = false}) => {
     const [pizzaDish, setPizzaDish] = useState<IPizzaDishesForm>(pizzaDishItem);
     const loadingForAddingDish = useAppSelector(selectAddPizzaDishLoading);
 
@@ -97,4 +97,4 @@ const AddNewDish: React.FC<Props> = ({editAndAddNewPizzaDish, pizzaDishItem = in
     );
 };
 
-export default AddNewDish;
+export default AddNewDishForm;

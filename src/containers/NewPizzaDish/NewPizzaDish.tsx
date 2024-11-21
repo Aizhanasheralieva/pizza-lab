@@ -1,4 +1,4 @@
-import AddNewDish from "../../components/AddNewDish/AddNewDish.tsx";
+import AddNewDishForm from "../../components/AddNewDishForm/AddNewDishForm.tsx";
 import {useAppDispatch} from "../../app/hooks.ts";
 import {addNewPizzaDish} from "../../store/thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
 import {useNavigate} from "react-router-dom";
@@ -16,7 +16,7 @@ const NewPizzaDish = () => {
 
     return (
         <div>
-            <AddNewDish editAndAddNewPizzaDish={editAndAddNewPizzaDish}/>
+            <AddNewDishForm editAndAddNewPizzaDish={editAndAddNewPizzaDish}/>
         </div>
     );
 };

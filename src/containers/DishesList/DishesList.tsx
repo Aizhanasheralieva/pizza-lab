@@ -12,7 +12,7 @@ import {
 import {useCallback, useEffect} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 
-const Admin = () => {
+const DishesList = () => {
     const loadingForFetchingDish = useAppSelector(selectFetchPizzaDishLoading);
     const allDishes = useAppSelector(selectAllPizzaDishes);
     const deletePizzaLoading = useAppSelector(selectDeletePizzaDishLoading);
@@ -54,10 +54,10 @@ const Admin = () => {
                                     <div className="d-flex justify-content-between align-items-center ">
                                     <img src={dish.image_URL} alt={dish.title} className="img rounded"
                                              style={{maxWidth: "100px"}}/>
-                                        <div className="w-75 ms-5">{dish.title}</div>
+                                        <div className="w-75 ms-5"><strong>{dish.title}</strong></div>
                                     </div>
                                     <div>
-                                        <div>{dish.price} KGS</div>
+                                        <div><strong>{dish.price} KGS</strong></div>
                                     </div>
 
                                     <div className="d-flex justify-content-between mt-2">
@@ -74,4 +74,4 @@ const Admin = () => {
     );
 };
 
-export default Admin;
+export default DishesList;
