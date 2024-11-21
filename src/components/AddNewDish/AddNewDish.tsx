@@ -1,21 +1,22 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useState} from "react";
 import {selectAddPizzaDishLoading} from "../../store/slices/variousPizzaDishesSlice.ts";
-import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {addNewPizzaDish, fetchAllPizzaDishes} from "../../store/thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
+import {useAppSelector} from "../../app/hooks.ts";
 import ButtonSpinner from "../UI/ButtonSpinner/ButtonSpinner.tsx";
-import {useNavigate} from "react-router-dom";
 
+interface Props {
+    editAndAddNewPizzaDish: (pizza: IPizzaDishesForm) => void;
+    pizzaDishItem?: IPizzaDishesForm;
+    isEdit?: boolean;
+}
 const initialStateForForm = {
     title: '',
     price: 0,
     image_URL: '',
 };
 
-const AddNewDish = () => {
+const AddNewDish: React.FC<Props> = ({editAndAddNewPizzaDish, pizzaDishItem = initialStateForForm, isEdit = false}) => {
+    const [pizzaDish, setPizzaDish] = useState<IPizzaDishesForm>(pizzaDishItem);
     const loadingForAddingDish = useAppSelector(selectAddPizzaDishLoading);
-    const dispatch = useAppDispatch();
-    const [pizzaDish, setPizzaDish] = useState<IPizzaDishesForm>(initialStateForForm);
-    const navigate = useNavigate();
 
     const onChangePizzaDishInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -27,29 +28,18 @@ const AddNewDish = () => {
         });
     };
 
-    // console.log(pizzaDish);
-
-  const fetchPizzaDishes = useCallback(async () => {
-        await dispatch(fetchAllPizzaDishes());
-    }, [dispatch]);
 
     const onSubmitTheForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await dispatch(addNewPizzaDish({...pizzaDish}));
-        navigate("/dishes");
-       await fetchPizzaDishes();
-       setPizzaDish(initialStateForForm);
+        editAndAddNewPizzaDish({
+            ...pizzaDish,
+            price: Number(pizzaDish.price),
+        });
     };
-
-
-
-    useEffect(() => {
-        void fetchPizzaDishes();
-    }, [fetchPizzaDishes]);
 
     return (
         <div className="container">
-            <h1>Add Dish</h1>
+            <h1>{isEdit ? 'Edit' : 'Add new'} Dish</h1>
             <form onSubmit={onSubmitTheForm}
                 className="p-4 w-50 border rounded shadow-lg bg-light">
                 <div className="mb-3">
@@ -87,7 +77,7 @@ const AddNewDish = () => {
                     placeholder="Enter dish image URL"/>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="image" className="form-label">Image of the dish</label>
+                    <label htmlFor="image" className="form-label">Image of the dish </label>
                     {pizzaDish.image_URL && (
                         <img
                             src={pizzaDish.image_URL}
@@ -98,8 +88,7 @@ const AddNewDish = () => {
                     )}
                 </div>
                 <div>
-                    <button disabled={loadingForAddingDish} type="submit" className="btn btn-primary me-2">Add new
-                        Dish
+                    <button disabled={loadingForAddingDish} type="submit" className="btn btn-primary me-2">{isEdit ? 'Edit' : 'Save'}
                     </button>
                     {loadingForAddingDish ? <ButtonSpinner/> : null}
                 </div>

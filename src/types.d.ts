@@ -4,6 +4,7 @@ interface IPizzaDishes {
     image_URL: string;
     id?: string;
 }
+
 interface IPizzaDishesForm {
     title: string;
     price: number;

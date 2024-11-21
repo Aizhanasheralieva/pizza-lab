@@ -2,22 +2,26 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
     addNewPizzaDish,
     deletePizzaDishById,
-    fetchAllPizzaDishes
+    fetchAllPizzaDishes, fetchOnePizzaDishById
 } from "../thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
 import {RootState} from "../../app/store.ts";
 
 interface variousPizzaDishesState {
     dishes: IPizzaDishes[],
+    onePizza: IPizzaDishes | null,
     loadings: {
         fetchingDishes: boolean;
+        onePizzaLoading: booolean;
         addingDish: boolean;
         deleteDish: boolean;
     }
 }
 const initialState: variousPizzaDishesState = {
    dishes: [],
+    onePizza: null,
     loadings: {
        fetchingDishes: false,
+        onePizzaLoading: false,
         addingDish: false,
         deleteDish: false,
     }
@@ -27,6 +31,7 @@ export const selectAddPizzaDishLoading = (state: RootState) => state.variousPizz
 export const selectFetchPizzaDishLoading = (state: RootState) => state.variousPizzaDishes.loadings.fetchingDishes;
 export const selectDeletePizzaDishLoading = (state: RootState) => state.variousPizzaDishes.loadings.deleteDish;
 export const selectAllPizzaDishes = (state: RootState) => state.variousPizzaDishes.dishes;
+export const selectOnePizza = (state: RootState) => state.variousPizzaDishes.onePizza;
 
 export const variousPizzaDishesSlice = createSlice({
    name: 'variousPizzaDishes',
@@ -61,6 +66,16 @@ export const variousPizzaDishesSlice = createSlice({
            })
            .addCase(deletePizzaDishById.rejected, (state) => {
                state.loadings.deleteDish = false;
+           })
+           .addCase(fetchOnePizzaDishById.pending, (state) => {
+               state.loadings.onePizzaLoading = true;
+           })
+           .addCase(fetchOnePizzaDishById.fulfilled, (state, action: PayloadAction<IPizzaDishes>) => {
+               state.loadings.onePizzaLoading = false;
+               state.onePizza = action.payload;
+           })
+           .addCase(fetchOnePizzaDishById.rejected, (state) => {
+               state.loadings.onePizzaLoading = false;
            });
     }
 });

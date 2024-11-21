@@ -14,20 +14,13 @@ const Navbar = () => {
                     <div className="ms-auto">
                         <ul className="navbar-nav align-items-center">
                             <li className="nav-item fs-4">
-                                <NavLink className="nav-link" to="/admin">
-                                    Admin
+                                <NavLink className="nav-link " to="/admin/orders">
+                                 Orders
                                 </NavLink>
                             </li>
                             <li className="nav-item fs-4">
-                                <NavLink className="nav-link" to="/dishes">
+                                <NavLink className="nav-link" to="/admin/dishes">
                                  Dishes
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/addNewDish">
-                                    <button className="btn btn-outline-light text-black text-bold fs-4"
-                                            type="submit">Add new Dish
-                                    </button>
                                 </NavLink>
                             </li>
                         </ul>
