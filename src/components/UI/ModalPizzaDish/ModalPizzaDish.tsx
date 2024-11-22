@@ -7,14 +7,13 @@ interface Props extends React.PropsWithChildren {
   show: boolean;
   title: string;
   closeModal: () => void;
-  defaultModalBtn?: boolean;
+  totalPrice: number;
 }
 const ModalPizzaDish: React.FC<Props> = ({
   show,
   title,
-  // children,
   closeModal,
-  defaultModalBtn,
+  totalPrice,
 }) => {
   const cartDishes = useAppSelector(selectPizzaCartDishes);
   return (
@@ -50,9 +49,9 @@ const ModalPizzaDish: React.FC<Props> = ({
               ) : (
                 <p>Your cart is empty</p>
               )}
-              <div className="d-flex flex-column align-items-start mt-3">
+              <div className="d-flex flex-column justify-content-between align-items-start mt-3">
                 <p>Delivery: 150 KGS</p>
-                <p><strong>Total</strong> KGS</p>
+                <p><strong>Total {totalPrice} KGS</strong></p>
               </div>
             </div>
             <div className="modal-footer">

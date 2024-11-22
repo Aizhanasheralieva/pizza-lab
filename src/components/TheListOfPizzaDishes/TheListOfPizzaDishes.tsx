@@ -3,15 +3,16 @@ import {selectAllPizzaDishes, selectFetchPizzaDishLoading,} from "../../store/sl
 import {useCallback, useEffect, useState} from "react";
 import {fetchAllPizzaDishes} from "../../store/thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
 import ButtonSpinner from "../UI/ButtonSpinner/ButtonSpinner.tsx";
-import {addDish,} from "../../store/slices/pizzaDishesCartSlice.ts";
+import {addDish, selectPizzaCartDishes,} from "../../store/slices/pizzaDishesCartSlice.ts";
 import ModalPizzaDish from "../UI/ModalPizzaDish/ModalPizzaDish.tsx";
-import {IPizzaDishes} from "../../types";
+import {IPizzaDishes, PizzaDishesCart} from "../../types";
 
 const TheListOfPizzaDishes = () => {
   const loadingForFetchingDish = useAppSelector(selectFetchPizzaDishLoading);
   const allDishes = useAppSelector(selectAllPizzaDishes);
   const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState(false);
+  const cartDishes = useAppSelector(selectPizzaCartDishes);
 
 
   const fetchPizzaDish = useCallback(async () => {
@@ -35,9 +36,17 @@ const TheListOfPizzaDishes = () => {
     setShowModal(false);
   };
 
-  // const calculateTotalPricaForPizzaDishes = () => {
-  //   let total = 0;
-  // };
+  const calculateTotalPriceForPizzaDishes = () => {
+    let total = 0;
+    cartDishes.forEach((cartDish: PizzaDishesCart) => {
+      const dish: IPizzaDishes = cartDish.dish;
+      total += dish.price * cartDish.amount;
+    });
+
+    const deliveryCost = 150;
+
+    return total + deliveryCost;
+  };
 
   return (
     <div>
@@ -83,6 +92,7 @@ const TheListOfPizzaDishes = () => {
               show={showModal}
               closeModal={closeModalPizzaDish}
               title="Your order:"
+              totalPrice={calculateTotalPriceForPizzaDishes()}
             />
           )}
         </>
