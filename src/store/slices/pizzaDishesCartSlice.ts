@@ -34,18 +34,12 @@ const pizzaDishesCartSlice = createSlice({
         state.pizzaDishesCart = [...cartCopy];
       }
     },
-    setSelectedDish: (
-      state,
-      { payload }: PayloadAction<PizzaDishesCart | null>,
-    ) => {
-      state.selectedDish = payload;
-    },
-    clearCart: (state) => {
-      state.pizzaDishesCart = [];
-    },
+    removeDish: (state, action: PayloadAction<string>) => {
+      state.pizzaDishesCart = state.pizzaDishesCart.filter(dish => dish.dish.id !== action.payload);
+    }
   },
 });
 
 export const cartReducer = pizzaDishesCartSlice.reducer;
-export const { addDish, setSelectedDish, clearCart } =
+export const { addDish, removeDish } =
   pizzaDishesCartSlice.actions;

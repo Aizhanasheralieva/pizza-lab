@@ -1,19 +1,15 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
-import {
-  selectAllPizzaDishes,
-  selectFetchPizzaDishLoading,
-} from "../../store/slices/variousPizzaDishesSlice.ts";
+import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
+import {selectFetchPizzaDishLoading,} from "../../store/slices/variousPizzaDishesSlice.ts";
 import ButtonSpinner from "../UI/ButtonSpinner/ButtonSpinner.tsx";
-import { IPizzaDishes } from "../../types";
-import { addDish } from "../../store/slices/pizzaDishesCartSlice.ts";
+import {IPizzaDishes} from "../../types";
+import {addDish} from "../../store/slices/pizzaDishesCartSlice.ts";
 
 interface Props {
   dish: IPizzaDishes;
 }
 const PizzaDishItem: React.FC<Props> = ({ dish }) => {
   const loadingForFetchingDish = useAppSelector(selectFetchPizzaDishLoading);
-  const allDishes = useAppSelector(selectAllPizzaDishes);
   const dispatch = useAppDispatch();
 
   const addDishToCart = () => {

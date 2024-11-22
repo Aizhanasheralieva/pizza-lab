@@ -1,7 +1,9 @@
 import BackdropPizzaDish from "../BackdropPizzaDish/BackdropPizzaDish.tsx";
 import React from "react";
-import {useAppSelector} from "../../../app/hooks.ts";
-import {selectPizzaCartDishes} from "../../../store/slices/pizzaDishesCartSlice.ts";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
+import {removeDish, selectPizzaCartDishes} from "../../../store/slices/pizzaDishesCartSlice.ts";
+import { RiDeleteBin5Fill } from "react-icons/ri";
+
 
 interface Props extends React.PropsWithChildren {
   show: boolean;
@@ -16,6 +18,12 @@ const ModalPizzaDish: React.FC<Props> = ({
   totalPrice,
 }) => {
   const cartDishes = useAppSelector(selectPizzaCartDishes);
+  const dispatch = useAppDispatch();
+
+  const controlRemoveDish = (dishId: string) => {
+    dispatch(removeDish(dishId));
+  };
+
   return (
     <>
       <BackdropPizzaDish show={show} onClick={closeModal} />
@@ -33,7 +41,7 @@ const ModalPizzaDish: React.FC<Props> = ({
         <div className="modal-dialog ">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5">{title}</h1>
+              <h1 className="modal-title fs-2">{title}</h1>
               <button type="button" className="btn-close" onClick={closeModal}></button>
             </div>
             <div className="modal-body p-2">
@@ -43,7 +51,7 @@ const ModalPizzaDish: React.FC<Props> = ({
                       <h4>{cartDish.dish.title}</h4>
                       <p>x {cartDish.amount}</p>
                       <p><strong>{cartDish.dish.price} KGS</strong> </p>
-                      <p>X</p>
+                      <button className="btn btn outline-danger p-1" onClick={() => controlRemoveDish((cartDish.dish.id))}><RiDeleteBin5Fill size={28} color="red" /></button>
                     </div>
                 ))
               ) : (
