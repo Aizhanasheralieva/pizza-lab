@@ -5,7 +5,7 @@ import { cartReducer } from "../store/slices/pizzaDishesCartSlice.ts";
 export const store = configureStore({
   reducer: {
     variousPizzaDishes: variousPizzaDishesReducer,
-    cart: cartReducer,
+    orderDish: cartReducer,
   },
 });
 

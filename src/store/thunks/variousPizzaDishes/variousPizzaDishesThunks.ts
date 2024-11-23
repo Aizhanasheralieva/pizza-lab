@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosAPI from "../../../axiosAPI.ts";
+import {IPizzaDishesForm, IPizzaDishesFromAPI} from "../../../types";
 
 export const addNewPizzaDish = createAsyncThunk<void, IPizzaDishesForm>(
   "variousPizzaDishes/addNewPizzaDish",

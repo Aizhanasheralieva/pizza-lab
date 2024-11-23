@@ -6,13 +6,14 @@ import {
   fetchOnePizzaDishById,
 } from "../thunks/variousPizzaDishes/variousPizzaDishesThunks.ts";
 import { RootState } from "../../app/store.ts";
+import {IPizzaDishes} from "../../types";
 
 interface variousPizzaDishesState {
   dishes: IPizzaDishes[];
   onePizza: IPizzaDishes | null;
   loadings: {
     fetchingDishes: boolean;
-    onePizzaLoading: booolean;
+    onePizzaLoading: boolean;
     addingDish: boolean;
     deleteDish: boolean;
   };

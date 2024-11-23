@@ -31,9 +31,6 @@ const PizzaDishItem: React.FC<Props> = ({ dish }) => {
               <div className="w-75 ms-2">
                 <strong>{dish.title}</strong>
               </div>
-              {/*<div className="w-25 ms-2">*/}
-              {/*    <strong>x {dish.amount}</strong>*/}
-              {/*</div>*/}
               <div className="w-25 ms-2">
                 <strong>{dish.price} KGS</strong>
               </div>

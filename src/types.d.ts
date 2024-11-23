@@ -19,3 +19,7 @@ export interface PizzaDishesCart {
   dish: IPizzaDishes;
   amount: number;
 }
+
+export interface IOrderItem {
+  [dishId: string]: number;
+}

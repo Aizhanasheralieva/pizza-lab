@@ -13,8 +13,8 @@ const initialState: PizzaDishesCartState = {
 };
 
 export const selectPizzaCartDishes = (state: RootState) =>
-  state.cart.pizzaDishesCart;
-export const selectSelectedDish = (state: RootState) => state.cart.selectedDish;
+  state.orderDish.pizzaDishesCart;
+export const selectSelectedDish = (state: RootState) => state.orderDish.selectedDish;
 
 const pizzaDishesCartSlice = createSlice({
   name: "cart",
@@ -36,10 +36,13 @@ const pizzaDishesCartSlice = createSlice({
     },
     removeDish: (state, action: PayloadAction<string>) => {
       state.pizzaDishesCart = state.pizzaDishesCart.filter(dish => dish.dish.id !== action.payload);
+    },
+    clearCart: (state) => {
+      state.pizzaDishesCart = [];
     }
   },
 });
 
 export const cartReducer = pizzaDishesCartSlice.reducer;
-export const { addDish, removeDish } =
+export const { addDish, removeDish, clearCart } =
   pizzaDishesCartSlice.actions;
