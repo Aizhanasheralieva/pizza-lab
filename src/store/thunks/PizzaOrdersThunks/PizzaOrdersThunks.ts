@@ -8,3 +8,12 @@ export const placeOrderDish = createAsyncThunk<void, IOrderItem>(
     await axiosAPI.post<IOrderItem>('orderDish.json', {...orderDish});
   }
 );
+
+export const fetchOrdersFromAPI = createAsyncThunk<IOrderItem, void>(
+  'cart/fetchOrdersFromAPI',
+ async () => {
+   const response: {data: IOrderItem} = await axiosAPI.get<IOrderItem>(`orderDish/.json`);
+   console.log(response.data);
+   return response.data || null;
+  }
+);

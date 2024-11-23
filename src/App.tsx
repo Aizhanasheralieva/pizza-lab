@@ -14,7 +14,6 @@ const App = () => {
           <Route path="/admin" element={<DishesList />} />
           <Route path="/admin/dishes" element={<DishesList />} />
           <Route path="/" element={<ClientPanel />} />
-          {/*<Route path="/pizzaCart" element={<PizzaCart/>}/>*/}
           <Route path="/admin/addNewDish" element={<NewPizzaDish />} />
           <Route path="/admin/:id/edit" element={<EditPizzaDish />} />
           <Route path="/admin/orders" element={<Orders />} />

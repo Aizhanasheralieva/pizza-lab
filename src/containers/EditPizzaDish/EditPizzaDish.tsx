@@ -20,14 +20,12 @@ const EditPizzaDish = () => {
     if (id) {
       await dispatch(fetchOnePizzaDishById(id));
     }
-    // console.log(id);
   }, [dispatch, id]);
 
   useEffect(() => {
     void receiveOnePizzaDish();
   }, [receiveOnePizzaDish]);
 
-  // console.log(pizzaOne);
 
   const editAndAddNewPizzaDish = async (pizza: IPizzaDishesForm) => {
     if (id) {
