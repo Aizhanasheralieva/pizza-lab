@@ -50,15 +50,17 @@ const Orders = () => {
               <div key={dishId} className="order-detail">
                 {dish ? (
                   <>
-                    <div className="border border-black rounded d-flex justify-content-between p-3 m-3">
+                    <div className="border border-black rounded d-flex justify-content-between m-2 p-2 ">
                       <div className="fs-3 me-2"><strong>{dish.title}</strong></div>
-                      <span>{quantity} pcs </span>
+                      <span>{dish.price} KGS</span>
+                      <span>{quantity} pizzas </span>
                       <div><span>Total price: {dish.price * quantity} KGS</span></div>
                     </div>
+
                   </>
                 ) : null}
               </div>
-              );
+              )
             })}
           </div>
         </div>
